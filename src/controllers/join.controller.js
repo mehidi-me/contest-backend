@@ -14,6 +14,11 @@ const getOneJoin = catchAsync(async (req, res) => {
   res.send(join);
 });
 
+const getOneJoin2 = catchAsync(async (req, res) => {
+  const join = await joinService.getOneJoin2(req.params);
+  res.send(join);
+});
+
 const getJoinAll = catchAsync(async (req, res) => {
   const join = await joinService.getJoinAll(req.params.id);
   res.send(join);
@@ -47,6 +52,7 @@ const deleteJoin = catchAsync(async (req, res) => {
 module.exports = {
   createJoin,
   getOneJoin,
+  getOneJoin2,
   getJoinAll,
   updateJoin,
   deleteJoin,

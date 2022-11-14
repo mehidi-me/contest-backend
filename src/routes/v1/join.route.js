@@ -7,6 +7,7 @@ const router = express.Router();
 router.route("/").post(joinController.createJoin);
 
 router.route("/:contestId/:userId").get(joinController.getOneJoin);
+router.route("/employe/:contestId/:userId").get(joinController.getOneJoin2);
 
 router.route("/:id").get(auth("getUsers"), joinController.getJoinAll);
 

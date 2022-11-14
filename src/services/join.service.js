@@ -9,6 +9,17 @@ const createJoin = async (joinBody) => {
 const getOneJoin = async (v) => {
   return Join.findOne({ contest_id: v.contestId, site_user_id: v.userId });
 };
+const getOneJoin2 = async (v) => {
+  const join = await Join.findOne({
+    ticket_id: v.contestId,
+    user_id: v.userId,
+  });
+  if (!join) {
+    throw new ApiError(httpStatus.NOT_FOUND, "not found");
+  }
+  const user = await User.findById(join.site_user_id);
+  return { join, user };
+};
 
 const getJoinAll = async (v) => {
   const joins = await Join.find({ contest_id: v });
@@ -57,6 +68,7 @@ const deletejoinById = async (joinId) => {
 module.exports = {
   createJoin,
   getOneJoin,
+  getOneJoin2,
   getJoinAll,
   updateJoinById,
   deletejoinById,
