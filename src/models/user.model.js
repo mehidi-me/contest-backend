@@ -13,7 +13,6 @@ const userSchema = mongoose.Schema(
     },
     passport_number: {
       type: String,
-      required: true,
       trim: true,
     },
     email: {
