@@ -11,7 +11,7 @@ const joinSchema = mongoose.Schema(
     status: {
       type: String,
       enum: ["pending", "approved", "delivared"],
-      default: "pending",
+      default: "approved",
     },
     prize_id: {
       type: String,
