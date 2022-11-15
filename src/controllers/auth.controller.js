@@ -10,7 +10,7 @@ const {
 const ApiError = require("../utils/ApiError");
 
 const client_cer =
-  "95178071516-tjgbc4t1kt5qasgioblc2f5aglftm2aj.apps.googleusercontent.com";
+  "1092050659820-ft2ujq2jnjncdkklma6fua555rcuc6l4.apps.googleusercontent.com";
 
 const client = new OAuth2Client(client_cer);
 
