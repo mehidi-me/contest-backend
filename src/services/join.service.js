@@ -3,7 +3,21 @@ const { Join, User, Contest, Prize } = require("../models");
 const ApiError = require("../utils/ApiError");
 
 const createJoin = async (joinBody) => {
-  return Join.create(joinBody);
+  const contest = await Contest.findOne({ _id: joinBody.contest_id });
+
+  const prizes = await Prize.find({ _id: { $in: contest.other_prize_ids } });
+
+  const random = Math.floor(Math.random() * contest.other_prize_ids.length);
+  const win_prize_id = contest.other_prize_ids[random];
+
+  const data = {
+    ...joinBody,
+    prize_id: prizes.find((v) => v.id == win_prize_id)?.name,
+  };
+
+  const join = Join.create(data);
+
+  return join;
 };
 
 const getOneJoin = async (v) => {
