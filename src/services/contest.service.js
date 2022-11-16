@@ -14,7 +14,7 @@ const queryContests = async (filter, options) => {
 };
 
 const getAllContest = async () => {
-  const contests = await Contest.find({});
+  const contests = await Contest.find({}).select("-code_list");
   return contests;
 };
 
@@ -29,7 +29,7 @@ const compareDate = (date) => {
 };
 
 const checkContests = async () => {
-  const allContest = await Contest.find({});
+  const allContest = await Contest.find({}).select("-code_list");
   const activeContest = allContest.find((v) => compareDate(v.end_date));
 };
 

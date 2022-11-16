@@ -10,6 +10,7 @@ const contestSchema = mongoose.Schema(
     },
     end_date: String,
     main_prize_id: String,
+    code_list: String,
     other_prize_ids: {
       type: Array,
       default: [],

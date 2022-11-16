@@ -5,7 +5,35 @@ const catchAsync = require("../utils/catchAsync");
 const { contestService } = require("../services");
 
 const createContest = catchAsync(async (req, res) => {
-  const contest = await contestService.createContest(req.body);
+  const uniqueNumber = (length) => {
+    let min = 0000000000;
+    let max = 9999999999;
+    let numbers = [];
+    for (let i = 0; i < length; i++) {
+      const number = Math.floor(Math.random() * (max - min + 1)) + min;
+      if (!numbers.includes(number)) {
+        numbers.push(number);
+      } else {
+        const number = Math.floor(Math.random() * (max - min + 1)) + min;
+        if (!numbers.includes(number)) {
+          numbers.push(number);
+        } else {
+          const number = Math.floor(Math.random() * (max - min + 1)) + min;
+          if (!numbers.includes(number)) {
+            numbers.push(number);
+          }
+        }
+      }
+    }
+
+    //console.log(numbers.length);
+    return JSON.stringify(numbers);
+  };
+
+  const contest = await contestService.createContest({
+    ...req.body,
+    code_list: uniqueNumber(req.body.code_list),
+  });
   res.status(httpStatus.CREATED).send(contest);
 });
 

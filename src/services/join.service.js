@@ -3,10 +3,21 @@ const { Join, User, Contest, Prize } = require("../models");
 const ApiError = require("../utils/ApiError");
 
 const createJoin = async (joinBody) => {
+  const joins = await Join.findOne({
+    contest_id: joinBody.contest_id,
+    code: joinBody.code,
+  });
+
+  if (joins)
+    throw new ApiError(httpStatus.NOT_FOUND, "Coupon code alrady used!");
+
   const contest = await Contest.findOne({ _id: joinBody.contest_id });
+  let code_lists = contest.code_list;
+  if (!code_lists.includes(joinBody.code)) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Coupon code not found!");
+  }
 
   const prizes = await Prize.find({ _id: { $in: contest.other_prize_ids } });
-
   const random = Math.floor(Math.random() * contest.other_prize_ids.length);
   const win_prize_id = contest.other_prize_ids[random];
 
@@ -14,7 +25,6 @@ const createJoin = async (joinBody) => {
     ...joinBody,
     prize_id: prizes.find((v) => v.id == win_prize_id)?.name,
   };
-
   const join = Join.create(data);
 
   return join;
@@ -38,7 +48,7 @@ const getOneJoin2 = async (v) => {
 const getJoinAll = async (v) => {
   const joins = await Join.find({ contest_id: v });
 
-  const contest = await Contest.findOne({ _id: v });
+  const contest = await Contest.findOne({ _id: v }).select("-code_list");
 
   const prizes = await Prize.find({ _id: { $in: contest.other_prize_ids } });
 
