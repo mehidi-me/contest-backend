@@ -48,7 +48,7 @@ const getOneJoin2 = async (v) => {
 const getJoinAll = async (v) => {
   const joins = await Join.find({ contest_id: v });
 
-  const contest = await Contest.findOne({ _id: v }).select("-code_list");
+  const contest = await Contest.findOne({ _id: v });
 
   const prizes = await Prize.find({ _id: { $in: contest.other_prize_ids } });
 
