@@ -31,7 +31,7 @@ const createJoin = async (joinBody) => {
 };
 
 const getOneJoin = async (v) => {
-  return Join.findOne({ contest_id: v.contestId, site_user_id: v.userId });
+  return Join.findOne({ code: v.contestId, site_user_id: v.userId });
 };
 const getOneJoin2 = async (v) => {
   const join = await Join.findOne({
